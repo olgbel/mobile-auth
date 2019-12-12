@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">@string/authentication</string>
+    <string name="login">Login</string>
+    <string name="registration">registration</string>
+    <string name="enter_login">Enter login</string>
+    <string name="enter_password">Enter password</string>
+    <string name="success">Success</string>
+    <string name="authentication_failed">Authentication failed</string>
+    <string name="registration_failed">Registration failed</string>
+    <string name="repeat_password">Repeat password</string>
+    <string name="please_wait">Please wait....</string>
+    <string name="authentication">Authentication</string>
+</resources>
