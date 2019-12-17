@@ -26,9 +26,9 @@ class RegistrationActivity : AppCompatActivity(), CoroutineScope by MainScope() 
             val password = edt_registration_password.text.toString()
             val repeatedPassword = edt_registration_repeat_password.text.toString()
             if (password != repeatedPassword) {
-                toast("Password aren't the same")
+                toast(R.string.different_passwords)
             } else if (!isValid(password)) {
-                toast("Password is incorrect")
+                toast(R.string.incorrect_password_mask)
             } else {
                 launch {
                     dialog =
@@ -38,15 +38,17 @@ class RegistrationActivity : AppCompatActivity(), CoroutineScope by MainScope() 
                         ) {
                             setCancelable(false)
                         }
-                    val responce =
+                    val response =
                         Repository.register(
                             edt_registration_login.toString(),
                             password
                         )
+                    println("response: $response")
                     dialog?.dismiss()
-                    if (responce.isSuccessful) {
+                    if (response.isSuccessful) {
+                        println("Success")
                         toast(R.string.success)
-                        setUserAuth(responce.body()!!.token)
+                        setUserAuth(response.body()!!.token)
                         finish()
                     } else {
                         toast(R.string.registration_failed)

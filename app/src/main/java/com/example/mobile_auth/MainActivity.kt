@@ -35,21 +35,26 @@ class MainActivity : AppCompatActivity(), CoroutineScope by MainScope() {
                             ) {
                                 setCancelable(false)
                             }
-                        val responce =
+                        val response =
                             Repository.authenticate(
                                 edt_login.text.toString(),
                                 edt_password.text.toString()
                             )
+                        println("response $response")
+                        println("login: $edt_login.text.toString()")
+                        println("password: $edt_password.text.toString()")
                         dialog?.dismiss()
-                        if (responce.isSuccessful) {
+                        if (response.isSuccessful) {
+                            println("Success")
                             Toast.makeText(this@MainActivity, R.string.success, Toast.LENGTH_SHORT)
                                 .show()
-                            setUserAuth(responce.body()!!.token)
+                            setUserAuth(response.body()!!.token)
                             val feedActivityIntent =
                                 Intent(this@MainActivity, FeedActivity::class.java)
                             startActivity(feedActivityIntent)
                             finish()
                         } else {
+                            println("failed")
                             Toast.makeText(
                                 this@MainActivity,
                                 R.string.authentication_failed,

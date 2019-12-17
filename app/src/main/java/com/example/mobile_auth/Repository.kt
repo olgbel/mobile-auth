@@ -11,7 +11,7 @@ object Repository {
     // Ленивое создание Retrofit экземпляра
     private val retrofit: Retrofit by lazy {
         Retrofit.Builder()
-            .baseUrl("https://ncraftmedia.herokuapp.com")
+            .baseUrl("http://crud-backend2.herokuapp.com/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
