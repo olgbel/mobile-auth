@@ -10,6 +10,7 @@
     <string name="repeat_password">Repeat password</string>
     <string name="please_wait">Please wait....</string>
     <string name="authentication">Authentication</string>
+    <string name="signup">Registration</string>
     <string name="different_passwords">Passwords aren\'t the same</string>
     <string name="incorrect_password_mask">Minimum is 6 chars. Should be at least one capital letter. Allow only english characters and numbers</string>
 </resources>

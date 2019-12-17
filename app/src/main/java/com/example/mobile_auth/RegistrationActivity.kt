@@ -34,7 +34,7 @@ class RegistrationActivity : AppCompatActivity(), CoroutineScope by MainScope() 
                     dialog =
                         indeterminateProgressDialog(
                             message = R.string.please_wait,
-                            title = R.string.authentication
+                            title = R.string.signup
                         ) {
                             setCancelable(false)
                         }
@@ -43,10 +43,8 @@ class RegistrationActivity : AppCompatActivity(), CoroutineScope by MainScope() 
                             edt_registration_login.toString(),
                             password
                         )
-                    println("response: $response")
                     dialog?.dismiss()
                     if (response.isSuccessful) {
-                        println("Success")
                         toast(R.string.success)
                         setUserAuth(response.body()!!.token)
                         finish()
