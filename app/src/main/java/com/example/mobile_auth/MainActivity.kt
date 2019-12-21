@@ -10,6 +10,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
 import org.jetbrains.anko.indeterminateProgressDialog
 import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.toast
 
 @InternalCoroutinesApi
 class MainActivity : AppCompatActivity(), CoroutineScope by MainScope() {
@@ -18,14 +19,15 @@ class MainActivity : AppCompatActivity(), CoroutineScope by MainScope() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         if (isAuthenticated()) {
             val feedActivityIntent = Intent(this@MainActivity, FeedActivity::class.java)
             startActivity(feedActivityIntent)
             finish()
         } else {
             btn_login.setOnClickListener {
-                if (!isValid(edt_password.text.toString())) {
-                    edt_password.error = "Password is incorrect"
+                if (!edt_password.text.toString().isValid()) {
+                    edt_password.error = R.string.invalid_password.toString()
                 } else {
                     launch {
                         dialog =
@@ -40,26 +42,16 @@ class MainActivity : AppCompatActivity(), CoroutineScope by MainScope() {
                                 edt_login.text.toString(),
                                 edt_password.text.toString()
                             )
-                        println("response $response")
-                        println("login: $edt_login.text.toString()")
-                        println("password: $edt_password.text.toString()")
                         dialog?.dismiss()
                         if (response.isSuccessful) {
-                            println("Success")
-                            Toast.makeText(this@MainActivity, R.string.success, Toast.LENGTH_SHORT)
-                                .show()
+                            toast(R.string.success)
                             setUserAuth(response.body()!!.token)
                             val feedActivityIntent =
                                 Intent(this@MainActivity, FeedActivity::class.java)
                             startActivity(feedActivityIntent)
                             finish()
                         } else {
-                            println("failed")
-                            Toast.makeText(
-                                this@MainActivity,
-                                R.string.authentication_failed,
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            toast(R.string.authentication_failed)
                         }
                     }
                 }

@@ -12,6 +12,7 @@ import kotlinx.coroutines.NonCancellable.cancel
 import kotlinx.coroutines.launch
 import org.jetbrains.anko.indeterminateProgressDialog
 import org.jetbrains.anko.toast
+import androidx.core.content.edit
 
 @InternalCoroutinesApi
 class RegistrationActivity : AppCompatActivity(), CoroutineScope by MainScope() {
@@ -27,7 +28,7 @@ class RegistrationActivity : AppCompatActivity(), CoroutineScope by MainScope() 
             val repeatedPassword = edt_registration_repeat_password.text.toString()
             if (password != repeatedPassword) {
                 toast(R.string.different_passwords)
-            } else if (!isValid(password)) {
+            } else if (!password.isValid()) {
                 toast(R.string.incorrect_password_mask)
             } else {
                 launch {
@@ -57,10 +58,9 @@ class RegistrationActivity : AppCompatActivity(), CoroutineScope by MainScope() 
     }
 
     private fun setUserAuth(token: String) =
-        getSharedPreferences(API_SHARED_FILE, Context.MODE_PRIVATE)
-            .edit()
-            .putString(AUTHENTICATED_SHARED_KEY, token)
-            .commit()
+        getSharedPreferences(API_SHARED_FILE, Context.MODE_PRIVATE).edit {
+            putString(AUTHENTICATED_SHARED_KEY, token)
+        }
 
     override fun onStop() {
         super.onStop()
