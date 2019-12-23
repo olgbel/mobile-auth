@@ -1,5 +1,8 @@
 package com.example.mobile_auth
 
+import android.app.AlertDialog
+import android.content.Context
+import kotlinx.android.synthetic.main.activity_create_post.*
 import java.util.regex.Pattern
 
 /**
@@ -11,3 +14,4 @@ private val pattern by lazy {
 }
 
 fun String.isValid() = pattern.matcher(this).matches()
+

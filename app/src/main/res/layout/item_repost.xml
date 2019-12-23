@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffff"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    android:layout_marginTop="16dp"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
+    android:padding="16dp">
+
+    <include
+        android:id="@+id/main_info_post"
+        layout="@layout/main_info" />
+
+    <ImageView
+        android:id="@+id/repostImg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_info_post"
+        app:srcCompat="@drawable/ic_reposts_inactive"
+        android:paddingTop="5dp"/>
+
+    <include
+        android:id="@+id/main_info_repost"
+        layout="@layout/main_info"
+        app:layout_constraintLeft_toRightOf="@id/repostImg"
+        app:layout_constraintTop_toBottomOf="@+id/main_info_post"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"/>
+
+    <include
+        android:id="@+id/social_btns_footer"
+        layout="@layout/social_buttons_footer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_info_repost" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

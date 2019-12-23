@@ -14,4 +14,12 @@
     <string name="different_passwords">Passwords aren\'t the same</string>
     <string name="incorrect_password_mask">Minimum is 6 chars. Should be at least one capital letter. Allow only english characters and numbers</string>
     <string name="invalid_password">Password is incorrect</string>
+    <string name="post_created_successfully">Post created successfully</string>
+    <string name="error_occured">Error occurred</string>
+    <string name="create">create</string>
+    <string name="enter_your_post_content">Enter your post content</string>
+    <string name="create_new_post">Create new Post</string>
+    <string name="downloading_posts">Downloading posts</string>
+    <string name="like_in_progress">Like is performing</string>
+    <string name="repost_in_progress">Repost is performing</string>
 </resources>
