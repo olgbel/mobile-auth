@@ -1,6 +1,8 @@
 package com.example.mobile_auth.api
 
 import com.example.mobile_auth.dto.PostModel
+import com.example.mobile_auth.dto.PostRequestDto
+import com.example.mobile_auth.dto.PostType
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -15,7 +17,9 @@ data class RegistrationRequestParams(val username: String, val password: String)
 
 // Данные для создания поста (для новых постов id=0)
 
-data class CreatePostRequest(val id: Long = 0, val content: String)
+data class CreatePostRequest(val id: Long = 0,
+                             val postType: PostType = PostType.POST,
+                             val content: String)
 
 interface API {
     @POST("api/v1/authentication")
@@ -40,5 +44,5 @@ interface API {
     suspend fun cancelMyLike(@Path("id") id: Long): Response<PostModel>
 
     @POST("api/v1/posts/repost/{id}")
-    suspend fun createRepost(@Path("id") id: Long): List<Response<PostModel>>
+    suspend fun createRepost(@Path("id") postId: Long, @Body createPostRequest: PostRequestDto): Response<Void>
 }

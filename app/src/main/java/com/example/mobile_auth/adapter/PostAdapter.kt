@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mobile_auth.R
 import com.example.mobile_auth.dto.PostModel
+import com.example.mobile_auth.dto.PostType
 
 class PostAdapter(val list: List<PostModel>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var likeBtnClickListener: OnLikeBtnClickListener? = null
@@ -39,7 +40,7 @@ class PostAdapter(val list: List<PostModel>) : RecyclerView.Adapter<RecyclerView
         }
     }
     override fun getItemViewType(position: Int): Int {
-        return if (list[position].source == null) {
+        return if (list[position].postType == PostType.POST){
             ITEM_TYPE_POST
         } else ITEM_TYPE_REPOST
     }

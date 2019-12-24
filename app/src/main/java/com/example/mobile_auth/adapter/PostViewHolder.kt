@@ -45,7 +45,7 @@ class PostViewHolder(val adapter: PostAdapter, view: View) : RecyclerView.ViewHo
 
     fun bind(post: PostModel) {
         with(itemView) {
-            authorTv.text = post.ownerName
+            authorTv.text = post.author
             contentTv.text = post.content
             likesTv.text = post.likes.count().toString()
             repostsTv.text = post.reposts.toString()

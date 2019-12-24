@@ -12,9 +12,8 @@ enum class PostType {
 
 data class PostModel(
     val id: Long,
-    val source: PostModel? = null,
-    val ownerId: Long,
-    val ownerName: String,
+    val sourceId: Long? = null,
+    val author: String,
     val created: Int,
     var content: String? = null,
     var likes: Set<Long> = setOf(),
@@ -22,8 +21,10 @@ data class PostModel(
     var reposts: Int = 0,
     var repostedByMe: Boolean = false,
     var comments: Int = 0,
-    val link: String? = null,
-    val type: PostType = PostType.POST,
+    val youtubeURL: String? = null,
+    val postType: PostType = PostType.POST,
+    val address: String? = null,
+    val coordinates: Pair<Double, Double>? = null,
     val attachment: AttachmentModel?
 ) {
     var likeActionPerforming = false

@@ -5,6 +5,8 @@ import com.example.mobile_auth.api.AuthRequestParams
 import com.example.mobile_auth.api.CreatePostRequest
 import com.example.mobile_auth.api.RegistrationRequestParams
 import com.example.mobile_auth.api.interceptor.InjectAuthTokenInterceptor
+import com.example.mobile_auth.dto.PostRequestDto
+import com.example.mobile_auth.dto.PostType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -55,7 +57,7 @@ object Repository {
 
     suspend fun getById(id: Long) = API.getPostById(id)
 
-    suspend fun createPost(content: String) = API.createPost(CreatePostRequest(content = content))
+    suspend fun createPost(content: String) = API.createPost(CreatePostRequest(postType = PostType.POST, content = content))
 
     suspend fun getPosts() = API.getPosts()
 
@@ -63,5 +65,8 @@ object Repository {
 
     suspend fun cancelMyLike(id: Long) = API.cancelMyLike(id)
 
-    suspend fun createRepost(id: Long) = API.createRepost(id)
+    suspend fun createRepost(postId: Long, content: String?) = API.createRepost(
+        postId,
+        PostRequestDto(content = content)
+    )
 }

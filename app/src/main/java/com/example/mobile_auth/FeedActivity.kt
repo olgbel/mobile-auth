@@ -2,10 +2,8 @@ package com.example.mobile_auth
 
 import android.app.AlertDialog
 import android.app.ProgressDialog
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -44,7 +42,7 @@ class FeedActivity : AppCompatActivity(), CoroutineScope by MainScope(),
             }
             val result = Repository.getPosts()
 
-            println("feed activity onStart: $result")
+            println("feed activity onStart: ${result.body()}")
             dialog?.dismiss()
             if (result.isSuccessful) {
                 with(container) {
@@ -80,14 +78,10 @@ class FeedActivity : AppCompatActivity(), CoroutineScope by MainScope(),
     }
 
     override fun onShareBtnClicked(item: PostModel, position: Int) {
-//        launch {
-
-
             println("on share button clicked")
             item.repostActionPerforming = true
             with(container) {
                 adapter?.notifyItemChanged(position)
-                val postId = adapter?.getItemId(position)
 
                 val dialog = AlertDialog.Builder(context)
                     .setView(R.layout.activity_create_post)
@@ -96,14 +90,14 @@ class FeedActivity : AppCompatActivity(), CoroutineScope by MainScope(),
                 dialog.createPostBtn.setOnClickListener {
                     val txt = dialog.contentEdt.text.toString()
                     launch {
-                        val response = Repository.createRepost(postId!!)
+                        val response = Repository.createRepost(item.id, txt)
                         println("response: $response")
                     }
-                    println("entered text: $txt")
                     dialog.dismiss()
+                    item.repostActionPerforming = false
                 }
-
+                adapter?.notifyItemChanged(position)
+//                adapter?.notifyItemInserted()
             }
-//        }
     }
 }
