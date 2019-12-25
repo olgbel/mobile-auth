@@ -44,5 +44,5 @@ interface API {
     suspend fun cancelMyLike(@Path("id") id: Long): Response<PostModel>
 
     @POST("api/v1/posts/repost/{id}")
-    suspend fun createRepost(@Path("id") postId: Long, @Body createPostRequest: PostRequestDto): Response<Void>
+    suspend fun createRepost(@Path("id") postId: Long, @Body createPostRequest: PostRequestDto): Response<List<PostModel>>
 }

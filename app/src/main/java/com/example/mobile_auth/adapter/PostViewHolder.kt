@@ -1,6 +1,5 @@
 package com.example.mobile_auth.adapter
 
-import android.content.Intent
 import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -22,7 +21,7 @@ class PostViewHolder(val adapter: PostAdapter, view: View) : RecyclerView.ViewHo
                             context,
                             context.getString(R.string.like_in_progress),
                             Toast.LENGTH_SHORT
-                        )
+                        ).show()
                     } else {
                         adapter.likeBtnClickListener?.onLikeBtnClicked(item, currentPosition)
                     }
@@ -33,10 +32,10 @@ class PostViewHolder(val adapter: PostAdapter, view: View) : RecyclerView.ViewHo
                 if (adapterPosition != RecyclerView.NO_POSITION) {
                     val item = adapter.list[adapterPosition]
                     if (item.repostActionPerforming){
-                        Toast.makeText(context, context.getString(R.string.repost_in_progress), Toast.LENGTH_SHORT)
+                        Toast.makeText(context, context.getString(R.string.repost_in_progress), Toast.LENGTH_SHORT).show()
                     }
                     else {
-                        adapter.repostBtnClickListener?.onShareBtnClicked(item, currentPosition)
+                        adapter.repostBtnClickListener?.onShareBtnClicked(item, currentPosition, adapter.list)
                     }
                 }
             }
@@ -53,7 +52,7 @@ class PostViewHolder(val adapter: PostAdapter, view: View) : RecyclerView.ViewHo
 
             if (post.likeActionPerforming) {
                 likeBtn.setImageResource(R.drawable.ic_favorite_pending_24dp)
-            } else if (post.likedByMe) {
+            } else if (post.likes.contains(post.author.toLong())) {
                 likeBtn.setImageResource(R.drawable.ic_favorite_active_24dp)
                 likesTv.setTextColor(ContextCompat.getColor(context, R.color.colorRed))
             } else {

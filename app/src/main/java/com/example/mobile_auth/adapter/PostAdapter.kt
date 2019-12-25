@@ -7,7 +7,7 @@ import com.example.mobile_auth.R
 import com.example.mobile_auth.dto.PostModel
 import com.example.mobile_auth.dto.PostType
 
-class PostAdapter(val list: List<PostModel>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class PostAdapter(var list: MutableList<PostModel>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var likeBtnClickListener: OnLikeBtnClickListener? = null
     var repostBtnClickListener: OnShareBtnClickListener? = null
 
@@ -15,15 +15,11 @@ class PostAdapter(val list: List<PostModel>) : RecyclerView.Adapter<RecyclerView
     private val ITEM_TYPE_REPOST = 2
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        println("PostAdapter onCreateViewHolder")
-        println("viewType: $viewType")
         return if (viewType == ITEM_TYPE_POST) {
             val postView =
                 LayoutInflater.from(parent.context).inflate(R.layout.item_post, parent, false)
-            println("postView")
             PostViewHolder(this, postView)
         } else {
-            println("repost view")
             val repostView =
                 LayoutInflater.from(parent.context).inflate(R.layout.item_repost, parent, false)
             RepostViewHolder(this, repostView)
@@ -33,7 +29,6 @@ class PostAdapter(val list: List<PostModel>) : RecyclerView.Adapter<RecyclerView
     override fun getItemCount() = list.size
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        println("holder: $holder")
         when(holder){
             is PostViewHolder -> holder.bind(list[position])
             is RepostViewHolder -> holder.bind(list[position])
@@ -50,6 +45,10 @@ class PostAdapter(val list: List<PostModel>) : RecyclerView.Adapter<RecyclerView
     }
 
     interface OnShareBtnClickListener{
-        fun onShareBtnClicked(item: PostModel, position: Int)
+        fun onShareBtnClicked(
+            item: PostModel,
+            position: Int,
+            postsList: MutableList<PostModel>
+        )
     }
 }

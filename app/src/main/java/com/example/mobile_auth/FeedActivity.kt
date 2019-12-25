@@ -4,7 +4,6 @@ import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mobile_auth.adapter.PostAdapter
@@ -14,6 +13,7 @@ import kotlinx.android.synthetic.main.activity_feed.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
+import org.jetbrains.anko.toast
 
 class FeedActivity : AppCompatActivity(), CoroutineScope by MainScope(),
     PostAdapter.OnLikeBtnClickListener, PostAdapter.OnShareBtnClickListener {
@@ -42,18 +42,17 @@ class FeedActivity : AppCompatActivity(), CoroutineScope by MainScope(),
             }
             val result = Repository.getPosts()
 
-            println("feed activity onStart: ${result.body()}")
             dialog?.dismiss()
             if (result.isSuccessful) {
                 with(container) {
                     layoutManager = LinearLayoutManager(this@FeedActivity)
-                    adapter = PostAdapter(result.body() ?: emptyList()).apply {
+                    adapter = PostAdapter(result.body() as MutableList<PostModel>).apply {
                         likeBtnClickListener = this@FeedActivity
                         repostBtnClickListener = this@FeedActivity
                     }
                 }
             } else {
-                Toast.makeText(this@FeedActivity, R.string.error_occured, Toast.LENGTH_SHORT)
+                toast(R.string.error_occured)
             }
         }
     }
@@ -63,7 +62,7 @@ class FeedActivity : AppCompatActivity(), CoroutineScope by MainScope(),
             item.likeActionPerforming = true
             with(container) {
                 adapter?.notifyItemChanged(position)
-                val response = if (item.likedByMe) {
+                val response = if (item.likes.contains(item.author.toLong())) {
                     Repository.cancelMyLike(item.id)
                 } else {
                     Repository.likedByMe(item.id)
@@ -77,8 +76,11 @@ class FeedActivity : AppCompatActivity(), CoroutineScope by MainScope(),
         }
     }
 
-    override fun onShareBtnClicked(item: PostModel, position: Int) {
-            println("on share button clicked")
+    override fun onShareBtnClicked(
+        item: PostModel,
+        position: Int,
+        postsList: MutableList<PostModel>
+    ) {
             item.repostActionPerforming = true
             with(container) {
                 adapter?.notifyItemChanged(position)
@@ -91,13 +93,16 @@ class FeedActivity : AppCompatActivity(), CoroutineScope by MainScope(),
                     val txt = dialog.contentEdt.text.toString()
                     launch {
                         val response = Repository.createRepost(item.id, txt)
-                        println("response: $response")
+                        if (response.isSuccessful){
+                            item.updatePost(response.body()?.get(0)!!)
+                            adapter?.notifyItemChanged(position)
+                            postsList.add(response.body()?.get(1)!!)
+                            adapter?.notifyDataSetChanged()
+                        }
                     }
                     dialog.dismiss()
                     item.repostActionPerforming = false
                 }
-                adapter?.notifyItemChanged(position)
-//                adapter?.notifyItemInserted()
             }
     }
 }

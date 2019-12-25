@@ -1,10 +1,10 @@
 package com.example.mobile_auth.adapter
 
 import android.view.View
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mobile_auth.R
-import com.example.mobile_auth.Repository
 import com.example.mobile_auth.dto.PostModel
 import kotlinx.android.synthetic.main.item_repost.view.*
 import kotlinx.android.synthetic.main.main_info.view.*
@@ -12,13 +12,33 @@ import kotlinx.android.synthetic.main.social_buttons_footer.view.*
 
 class RepostViewHolder(val adapter: PostAdapter, view: View) : RecyclerView.ViewHolder(view) {
 
+    init {
+        with(itemView) {
+            likeBtn.setOnClickListener {
+                val currentPosition = adapterPosition
+                if (currentPosition != RecyclerView.NO_POSITION) {
+                    val item = adapter.list[currentPosition]
+                    if (item.likeActionPerforming) {
+                        Toast.makeText(
+                            context,
+                            context.getString(R.string.like_in_progress),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        adapter.likeBtnClickListener?.onLikeBtnClicked(item, currentPosition)
+                    }
+                }
+            }
+        }
+    }
+
     fun bind(post: PostModel) {
         with(itemView) {
             main_info_post.authorTv.text = post.author
             main_info_post.contentTv.text = post.content
 
-//            main_info_repost.authorTv.text = post.source?.ownerName
-//            main_info_repost.contentTv.text = post.source?.content
+            main_info_repost.authorTv.text = post.source?.author
+            main_info_repost.contentTv.text = post.source?.content
 
             social_btns_footer.likesTv.text = post.likes.count().toString()
             social_btns_footer.repostsTv.text = post.reposts.toString()
@@ -26,7 +46,7 @@ class RepostViewHolder(val adapter: PostAdapter, view: View) : RecyclerView.View
 
             if (post.likeActionPerforming) {
                 likeBtn.setImageResource(R.drawable.ic_favorite_pending_24dp)
-            } else if (post.likedByMe) {
+            } else if (post.likes.contains(post.author.toLong())) {
                 likeBtn.setImageResource(R.drawable.ic_favorite_active_24dp)
                 likesTv.setTextColor(ContextCompat.getColor(context, R.color.colorRed))
             } else {
@@ -34,15 +54,8 @@ class RepostViewHolder(val adapter: PostAdapter, view: View) : RecyclerView.View
                 likesTv.setTextColor(ContextCompat.getColor(context, R.color.colorGrey))
             }
 
-            if (post.repostActionPerforming) {
-                shareBtn.setImageResource(R.drawable.ic_reposts_pending)
-            } else if (post.repostedByMe) {
-                shareBtn.setImageResource(R.drawable.ic_reposts_active)
-                repostsTv.setTextColor(ContextCompat.getColor(context, R.color.colorRed))
-            } else {
-                shareBtn.setImageResource(R.drawable.ic_reposts_inactive)
-                repostsTv.setTextColor(ContextCompat.getColor(context, R.color.colorGrey))
-            }
+            shareBtn.visibility = View.INVISIBLE
+            repostsTv.visibility = View.INVISIBLE
         }
 
     }

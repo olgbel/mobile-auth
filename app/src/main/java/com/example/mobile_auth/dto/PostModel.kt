@@ -13,11 +13,11 @@ enum class PostType {
 data class PostModel(
     val id: Long,
     val sourceId: Long? = null,
+    val source: PostModel?,
     val author: String,
     val created: Int,
     var content: String? = null,
     var likes: Set<Long> = setOf(),
-    var likedByMe: Boolean = false,
     var reposts: Int = 0,
     var repostedByMe: Boolean = false,
     var comments: Int = 0,
@@ -33,12 +33,10 @@ data class PostModel(
     fun updateLikes(updatedModel: PostModel) {
         if (id != updatedModel.id) throw IllegalAccessException("Ids are different")
         likes = updatedModel.likes
-        likedByMe = updatedModel.likedByMe
     }
     fun updatePost(updatedModel: PostModel) {
         if (id != updatedModel.id) throw IllegalAccessException("Ids are different")
         likes = updatedModel.likes
-        likedByMe = updatedModel.likedByMe
         content = updatedModel.content
         reposts = updatedModel.reposts
         repostedByMe = updatedModel.repostedByMe
