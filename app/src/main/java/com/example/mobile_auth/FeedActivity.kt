@@ -40,7 +40,7 @@ class FeedActivity : AppCompatActivity(), CoroutineScope by MainScope(),
                 setProgressBarIndeterminate(true)
                 show()
             }
-            val result = Repository.getPosts()
+            val result = Repository.getRecentPosts()
 
             dialog?.dismiss()
             if (result.isSuccessful) {

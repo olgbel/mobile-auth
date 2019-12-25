@@ -17,7 +17,7 @@ class RepostViewHolder(val adapter: PostAdapter, view: View) : RecyclerView.View
             likeBtn.setOnClickListener {
                 val currentPosition = adapterPosition
                 if (currentPosition != RecyclerView.NO_POSITION) {
-                    val item = adapter.list[currentPosition]
+                    val item = adapter.list[currentPosition - 1]
                     if (item.likeActionPerforming) {
                         Toast.makeText(
                             context,

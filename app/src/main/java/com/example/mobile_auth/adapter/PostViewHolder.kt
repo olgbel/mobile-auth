@@ -15,7 +15,7 @@ class PostViewHolder(val adapter: PostAdapter, view: View) : RecyclerView.ViewHo
             likeBtn.setOnClickListener {
                 val currentPosition = adapterPosition
                 if (currentPosition != RecyclerView.NO_POSITION) {
-                    val item = adapter.list[currentPosition]
+                    val item = adapter.list[currentPosition - 1]
                     if (item.likeActionPerforming) {
                         Toast.makeText(
                             context,
@@ -30,7 +30,7 @@ class PostViewHolder(val adapter: PostAdapter, view: View) : RecyclerView.ViewHo
             shareBtn.setOnClickListener {
                 val currentPosition = adapterPosition
                 if (adapterPosition != RecyclerView.NO_POSITION) {
-                    val item = adapter.list[adapterPosition]
+                    val item = adapter.list[adapterPosition - 1]
                     if (item.repostActionPerforming){
                         Toast.makeText(context, context.getString(R.string.repost_in_progress), Toast.LENGTH_SHORT).show()
                     }

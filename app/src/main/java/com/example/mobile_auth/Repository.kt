@@ -61,6 +61,12 @@ object Repository {
 
     suspend fun getPosts() = API.getPosts()
 
+    suspend fun getPostsAfter(id: Long) = API.getPostsAfter(id)
+
+    suspend fun getPostsBefore(id: Long) = API.getPostsBefore(id)
+
+    suspend fun getRecentPosts() = API.getRecentPosts()
+
     suspend fun likedByMe(id: Long) = API.likedByMe(id)
 
     suspend fun cancelMyLike(id: Long) = API.cancelMyLike(id)

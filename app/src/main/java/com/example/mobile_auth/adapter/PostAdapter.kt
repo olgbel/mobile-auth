@@ -13,31 +13,48 @@ class PostAdapter(var list: MutableList<PostModel>) : RecyclerView.Adapter<Recyc
 
     private val ITEM_TYPE_POST = 1
     private val ITEM_TYPE_REPOST = 2
+    private val ITEM_FOOTER = 3
+    private val ITEM_HEADER = 4
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == ITEM_TYPE_POST) {
             val postView =
                 LayoutInflater.from(parent.context).inflate(R.layout.item_post, parent, false)
             PostViewHolder(this, postView)
-        } else {
+        } else if (viewType == ITEM_TYPE_REPOST){
             val repostView =
                 LayoutInflater.from(parent.context).inflate(R.layout.item_repost, parent, false)
             RepostViewHolder(this, repostView)
         }
+        else if (viewType == ITEM_HEADER) {
+            HeaderViewHolder(
+                this,
+                LayoutInflater.from(parent.context).inflate(R.layout.item_load_new, parent, false)
+            )
+        } else {
+            FooterViewHolder(
+                this,
+                LayoutInflater.from(parent.context).inflate(R.layout.item_load_more, parent, false)
+            )
+        }
     }
 
-    override fun getItemCount() = list.size
+    override fun getItemCount() = list.size + 2
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when(holder){
-            is PostViewHolder -> holder.bind(list[position])
-            is RepostViewHolder -> holder.bind(list[position])
+            is PostViewHolder -> holder.bind(list[position - 1])
+            is RepostViewHolder -> holder.bind(list[position - 1])
         }
     }
     override fun getItemViewType(position: Int): Int {
-        return if (list[position].postType == PostType.POST){
-            ITEM_TYPE_POST
-        } else ITEM_TYPE_REPOST
+
+        return when {
+            position == 0 -> ITEM_HEADER
+            position == list.size + 1 -> ITEM_FOOTER
+            list[position - 1].postType == PostType.POST -> ITEM_TYPE_POST
+            else -> ITEM_TYPE_REPOST
+        }
     }
 
     interface OnLikeBtnClickListener{

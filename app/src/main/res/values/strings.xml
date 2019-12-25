@@ -22,4 +22,6 @@
     <string name="downloading_posts">Downloading posts</string>
     <string name="like_in_progress">Like is performing</string>
     <string name="repost_in_progress">Repost is performing</string>
+    <string name="load_new_posts">Load new posts</string>
+    <string name="load_more_posts">Load more posts</string>
 </resources>
