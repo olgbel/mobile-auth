@@ -12,7 +12,6 @@ enum class PostType {
 
 data class PostModel(
     val id: Long,
-    val sourceId: Long? = null,
     val source: PostModel?,
     val author: String,
     val created: Int,

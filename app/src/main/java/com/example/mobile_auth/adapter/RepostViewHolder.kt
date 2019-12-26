@@ -9,6 +9,7 @@ import com.example.mobile_auth.dto.PostModel
 import kotlinx.android.synthetic.main.item_repost.view.*
 import kotlinx.android.synthetic.main.main_info.view.*
 import kotlinx.android.synthetic.main.social_buttons_footer.view.*
+import org.jetbrains.anko.toast
 
 class RepostViewHolder(val adapter: PostAdapter, view: View) : RecyclerView.ViewHolder(view) {
 
@@ -19,11 +20,7 @@ class RepostViewHolder(val adapter: PostAdapter, view: View) : RecyclerView.View
                 if (currentPosition != RecyclerView.NO_POSITION) {
                     val item = adapter.list[currentPosition - 1]
                     if (item.likeActionPerforming) {
-                        Toast.makeText(
-                            context,
-                            context.getString(R.string.like_in_progress),
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        context.toast(R.string.like_in_progress)
                     } else {
                         adapter.likeBtnClickListener?.onLikeBtnClicked(item, currentPosition)
                     }

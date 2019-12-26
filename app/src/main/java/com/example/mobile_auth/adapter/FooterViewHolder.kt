@@ -2,6 +2,7 @@ package com.example.mobile_auth.adapter
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import com.example.mobile_auth.R
 import com.example.mobile_auth.Repository
 import kotlinx.android.synthetic.main.item_load_more.view.*
 import kotlinx.coroutines.Dispatchers
@@ -21,14 +22,14 @@ class FooterViewHolder(val adapter: PostAdapter, view: View) : RecyclerView.View
                     loadMoreBtn.isEnabled = true
 
                     if (response.body()?.isEmpty()!!) {
-                        context.toast("There is all posts")
+                        context.toast(R.string.all_posts)
                     }
                     if (response.isSuccessful) {
                         val newItems = response.body()!!
                         adapter.list.addAll(adapter.list.size, newItems)
                         adapter.notifyItemRangeInserted(adapter.list.size, newItems.size)
                     } else {
-                        context.toast("Error occured")
+                        context.toast(R.string.error_occured)
                     }
                 }
             }

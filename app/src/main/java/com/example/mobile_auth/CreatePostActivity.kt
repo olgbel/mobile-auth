@@ -21,7 +21,6 @@ class CreatePostActivity : AppCompatActivity(), CoroutineScope by MainScope() {
 
         createPostBtn.setOnClickListener {
             launch {
-                // Показываем крутилку
                 dialog = ProgressDialog(this@CreatePostActivity).apply {
                     setMessage(this@CreatePostActivity.getString(R.string.please_wait))
                     setTitle(R.string.create_new_post)
@@ -29,27 +28,21 @@ class CreatePostActivity : AppCompatActivity(), CoroutineScope by MainScope() {
                     setProgressBarIndeterminate(true)
                     show()
                 }
-                // Обворачиваем в try catch, потому что возможны ошибки при соединении с сетью
                 try {
                     val result = Repository.createPost(contentEdt.text.toString())
                     if (result.isSuccessful) {
-                        // обрабатываем успешное создание поста
                         handleSuccessfullResult()
                     } else {
-                        // обрабоатываем ошибку
                         handleFailedResult()
                     }
                 } catch (e: IOException) {
-                    // обрабатываем ошибку
                     handleFailedResult()
                 } finally {
-                    // закрываем диалог
                     dialog?.dismiss()
                 }
 
             }
         }
-
     }
 
     private fun handleSuccessfullResult() {

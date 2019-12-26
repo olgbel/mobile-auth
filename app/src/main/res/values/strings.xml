@@ -24,4 +24,6 @@
     <string name="repost_in_progress">Repost is performing</string>
     <string name="load_new_posts">Load new posts</string>
     <string name="load_more_posts">Load more posts</string>
+    <string name="no_new_content">There is no new content</string>
+    <string name="all_posts">There is all posts</string>
 </resources>
