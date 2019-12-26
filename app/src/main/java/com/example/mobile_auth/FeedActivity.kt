@@ -96,7 +96,7 @@ class FeedActivity : AppCompatActivity(), CoroutineScope by MainScope(),
                         if (response.isSuccessful){
                             item.updatePost(response.body()?.get(0)!!)
                             adapter?.notifyItemChanged(position)
-                            postsList.add(response.body()?.get(1)!!)
+                            postsList.add(0, response.body()?.get(1)!!)
                             adapter?.notifyDataSetChanged()
                         }
                     }

@@ -16,7 +16,7 @@ class FooterViewHolder(val adapter: PostAdapter, view: View) : RecyclerView.View
                 loadMoreBtn.isEnabled = false
                 progressbar.visibility = View.VISIBLE
                 GlobalScope.launch(Dispatchers.Main) {
-                    val response = Repository.getPostsBefore(adapter.list[0].id)
+                    val response = Repository.getPostsBefore(adapter.list[adapter.list.size - 1].id)
                     progressbar.visibility = View.INVISIBLE
                     loadMoreBtn.isEnabled = true
 
@@ -25,8 +25,8 @@ class FooterViewHolder(val adapter: PostAdapter, view: View) : RecyclerView.View
                     }
                     if (response.isSuccessful) {
                         val newItems = response.body()!!
-                        adapter.list.addAll(0, newItems)
-                        adapter.notifyItemRangeInserted(0, newItems.size)
+                        adapter.list.addAll(adapter.list.size, newItems)
+                        adapter.notifyItemRangeInserted(adapter.list.size, newItems.size)
                     } else {
                         context.toast("Error occured")
                     }
