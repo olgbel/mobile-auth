@@ -3,50 +3,59 @@ package com.example.mobile_auth.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.mobile_auth.R
+import com.example.mobile_auth.*
 import com.example.mobile_auth.dto.PostModel
 import com.example.mobile_auth.dto.PostType
 
-class PostAdapter(var list: MutableList<PostModel>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class PostAdapter(var list: MutableList<PostModel>) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var likeBtnClickListener: OnLikeBtnClickListener? = null
     var repostBtnClickListener: OnShareBtnClickListener? = null
 
-    private val ITEM_TYPE_POST = 1
-    private val ITEM_TYPE_REPOST = 2
-    private val ITEM_FOOTER = 3
-    private val ITEM_HEADER = 4
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return if (viewType == ITEM_TYPE_POST) {
-            val postView =
-                LayoutInflater.from(parent.context).inflate(R.layout.item_post, parent, false)
-            PostViewHolder(this, postView)
-        } else if (viewType == ITEM_TYPE_REPOST){
-            val repostView =
-                LayoutInflater.from(parent.context).inflate(R.layout.item_repost, parent, false)
-            RepostViewHolder(this, repostView)
-        }
-        else if (viewType == ITEM_HEADER) {
-            HeaderViewHolder(
-                this,
-                LayoutInflater.from(parent.context).inflate(R.layout.item_load_new, parent, false)
-            )
-        } else {
-            FooterViewHolder(
-                this,
-                LayoutInflater.from(parent.context).inflate(R.layout.item_load_more, parent, false)
-            )
+        return when (viewType) {
+            ITEM_TYPE_POST -> {
+                val postView =
+                    LayoutInflater.from(parent.context).inflate(R.layout.item_post, parent, false)
+                PostViewHolder(this, postView)
+            }
+            ITEM_TYPE_REPOST -> {
+                val repostView =
+                    LayoutInflater.from(parent.context).inflate(R.layout.item_repost, parent, false)
+                RepostViewHolder(this, repostView)
+            }
+            ITEM_HEADER -> {
+                HeaderViewHolder(
+                    this,
+                    LayoutInflater.from(parent.context).inflate(
+                        R.layout.item_load_new,
+                        parent,
+                        false
+                    )
+                )
+            }
+            else -> {
+                FooterViewHolder(
+                    this,
+                    LayoutInflater.from(parent.context).inflate(
+                        R.layout.item_load_more,
+                        parent,
+                        false
+                    )
+                )
+            }
         }
     }
 
     override fun getItemCount() = list.size + 2
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when(holder){
+        when (holder) {
             is PostViewHolder -> holder.bind(list[position - 1])
             is RepostViewHolder -> holder.bind(list[position - 1])
         }
     }
+
     override fun getItemViewType(position: Int): Int {
 
         return when {
@@ -57,11 +66,11 @@ class PostAdapter(var list: MutableList<PostModel>) : RecyclerView.Adapter<Recyc
         }
     }
 
-    interface OnLikeBtnClickListener{
+    interface OnLikeBtnClickListener {
         fun onLikeBtnClicked(item: PostModel, position: Int)
     }
 
-    interface OnShareBtnClickListener{
+    interface OnShareBtnClickListener {
         fun onShareBtnClicked(
             item: PostModel,
             position: Int,

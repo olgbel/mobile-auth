@@ -87,7 +87,6 @@ class FeedActivity : AppCompatActivity(), CoroutineScope by MainScope(),
 
                 val dialog = AlertDialog.Builder(context)
                     .setView(R.layout.activity_create_post)
-                    .setCancelable(true)
                     .show()
                 dialog.createPostBtn.setOnClickListener {
                     val txt = dialog.contentEdt.text.toString()

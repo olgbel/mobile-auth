@@ -41,14 +41,18 @@ class RepostViewHolder(val adapter: PostAdapter, view: View) : RecyclerView.View
             social_btns_footer.repostsTv.text = post.reposts.toString()
             social_btns_footer.commentsTv.text = post.comments.toString()
 
-            if (post.likeActionPerforming) {
-                likeBtn.setImageResource(R.drawable.ic_favorite_pending_24dp)
-            } else if (post.likes.contains(post.author.toLong())) {
-                likeBtn.setImageResource(R.drawable.ic_favorite_active_24dp)
-                likesTv.setTextColor(ContextCompat.getColor(context, R.color.colorRed))
-            } else {
-                likeBtn.setImageResource(R.drawable.ic_favorite_inactive_24dp)
-                likesTv.setTextColor(ContextCompat.getColor(context, R.color.colorGrey))
+            when {
+                post.likeActionPerforming -> {
+                    likeBtn.setImageResource(R.drawable.ic_favorite_pending_24dp)
+                }
+                post.likes.contains(post.author.toLong()) -> {
+                    likeBtn.setImageResource(R.drawable.ic_favorite_active_24dp)
+                    likesTv.setTextColor(ContextCompat.getColor(context, R.color.colorRed))
+                }
+                else -> {
+                    likeBtn.setImageResource(R.drawable.ic_favorite_inactive_24dp)
+                    likesTv.setTextColor(ContextCompat.getColor(context, R.color.colorGrey))
+                }
             }
 
             shareBtn.visibility = View.INVISIBLE

@@ -28,11 +28,18 @@ class PostViewHolder(val adapter: PostAdapter, view: View) : RecyclerView.ViewHo
                 val currentPosition = adapterPosition
                 if (adapterPosition != RecyclerView.NO_POSITION) {
                     val item = adapter.list[adapterPosition - 1]
-                    if (item.repostActionPerforming){
-                        Toast.makeText(context, context.getString(R.string.repost_in_progress), Toast.LENGTH_SHORT).show()
-                    }
-                    else {
-                        adapter.repostBtnClickListener?.onShareBtnClicked(item, currentPosition, adapter.list)
+                    if (item.repostActionPerforming) {
+                        Toast.makeText(
+                            context,
+                            context.getString(R.string.repost_in_progress),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        adapter.repostBtnClickListener?.onShareBtnClicked(
+                            item,
+                            currentPosition,
+                            adapter.list
+                        )
                     }
                 }
             }
@@ -47,24 +54,32 @@ class PostViewHolder(val adapter: PostAdapter, view: View) : RecyclerView.ViewHo
             repostsTv.text = post.reposts.toString()
             commentsTv.text = post.comments.toString()
 
-            if (post.likeActionPerforming) {
-                likeBtn.setImageResource(R.drawable.ic_favorite_pending_24dp)
-            } else if (post.likes.contains(post.author.toLong())) {
-                likeBtn.setImageResource(R.drawable.ic_favorite_active_24dp)
-                likesTv.setTextColor(ContextCompat.getColor(context, R.color.colorRed))
-            } else {
-                likeBtn.setImageResource(R.drawable.ic_favorite_inactive_24dp)
-                likesTv.setTextColor(ContextCompat.getColor(context, R.color.colorGrey))
+            when {
+                post.likeActionPerforming -> {
+                    likeBtn.setImageResource(R.drawable.ic_favorite_pending_24dp)
+                }
+                post.likes.contains(post.author.toLong()) -> {
+                    likeBtn.setImageResource(R.drawable.ic_favorite_active_24dp)
+                    likesTv.setTextColor(ContextCompat.getColor(context, R.color.colorRed))
+                }
+                else -> {
+                    likeBtn.setImageResource(R.drawable.ic_favorite_inactive_24dp)
+                    likesTv.setTextColor(ContextCompat.getColor(context, R.color.colorGrey))
+                }
             }
 
-            if (post.repostActionPerforming) {
-                shareBtn.setImageResource(R.drawable.ic_reposts_pending)
-            } else if (post.repostedByMe) {
-                shareBtn.setImageResource(R.drawable.ic_reposts_active)
-                repostsTv.setTextColor(ContextCompat.getColor(context, R.color.colorRed))
-            } else {
-                shareBtn.setImageResource(R.drawable.ic_reposts_inactive)
-                repostsTv.setTextColor(ContextCompat.getColor(context, R.color.colorGrey))
+            when {
+                post.repostActionPerforming -> {
+                    shareBtn.setImageResource(R.drawable.ic_reposts_pending)
+                }
+                post.repostedByMe -> {
+                    shareBtn.setImageResource(R.drawable.ic_reposts_active)
+                    repostsTv.setTextColor(ContextCompat.getColor(context, R.color.colorRed))
+                }
+                else -> {
+                    shareBtn.setImageResource(R.drawable.ic_reposts_inactive)
+                    repostsTv.setTextColor(ContextCompat.getColor(context, R.color.colorGrey))
+                }
             }
         }
     }
