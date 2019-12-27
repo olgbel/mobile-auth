@@ -6,6 +6,8 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mobile_auth.R
 import com.example.mobile_auth.dto.PostModel
+import com.example.mobile_auth.utils.loadImage
+import kotlinx.android.synthetic.main.item_post.view.*
 import kotlinx.android.synthetic.main.main_info.view.*
 import kotlinx.android.synthetic.main.social_buttons_footer.view.*
 import org.jetbrains.anko.toast
@@ -53,6 +55,10 @@ class PostViewHolder(val adapter: PostAdapter, view: View) : RecyclerView.ViewHo
             likesTv.text = post.likes.count().toString()
             repostsTv.text = post.reposts.toString()
             commentsTv.text = post.comments.toString()
+
+            if (post.attachment != null) {
+                loadImage(photoImg, post.attachment.url)
+            }
 
             when {
                 post.likeActionPerforming -> {

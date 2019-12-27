@@ -1,10 +1,15 @@
 package com.example.mobile_auth.dto
 
+import com.example.mobile_auth.utils.BASE_URL
+
 enum class AttachmentType {
     IMAGE, AUDIO, VIDEO
 }
 
-data class AttachmentModel(val id: String, val url: String, val type: AttachmentType)
+data class AttachmentModel(val id: String, val type: AttachmentType){
+    val url
+        get() = "$BASE_URL/api/v1/static/$id"
+}
 
 enum class PostType {
     POST, REPOST
