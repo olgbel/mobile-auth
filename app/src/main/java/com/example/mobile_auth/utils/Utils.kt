@@ -1,5 +1,7 @@
 package com.example.mobile_auth.utils
 
+import android.widget.ImageView
+import com.bumptech.glide.Glide
 import java.util.regex.Pattern
 
 /**
@@ -11,4 +13,10 @@ private val pattern by lazy {
 }
 
 fun String.isValid() = pattern.matcher(this).matches()
+
+fun loadImage(photoImg: ImageView, url: String) {
+    Glide.with(photoImg.context)
+        .load(url)
+        .into(photoImg)
+}
 
