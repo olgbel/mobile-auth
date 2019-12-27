@@ -4,8 +4,10 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.mobile_auth.utils.API_SHARED_FILE
+import com.example.mobile_auth.utils.AUTHENTICATED_SHARED_KEY
+import com.example.mobile_auth.utils.isValid
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
 import org.jetbrains.anko.indeterminateProgressDialog

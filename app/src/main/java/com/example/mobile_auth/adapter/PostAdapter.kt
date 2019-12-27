@@ -6,6 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mobile_auth.*
 import com.example.mobile_auth.dto.PostModel
 import com.example.mobile_auth.dto.PostType
+import com.example.mobile_auth.utils.ITEM_FOOTER
+import com.example.mobile_auth.utils.ITEM_HEADER
+import com.example.mobile_auth.utils.ITEM_TYPE_POST
+import com.example.mobile_auth.utils.ITEM_TYPE_REPOST
 
 class PostAdapter(var list: MutableList<PostModel>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {

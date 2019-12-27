@@ -1,8 +1,5 @@
-package com.example.mobile_auth
+package com.example.mobile_auth.utils
 
-import android.app.AlertDialog
-import android.content.Context
-import kotlinx.android.synthetic.main.activity_create_post.*
 import java.util.regex.Pattern
 
 /**

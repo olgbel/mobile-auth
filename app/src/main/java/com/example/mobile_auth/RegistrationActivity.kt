@@ -13,6 +13,9 @@ import kotlinx.coroutines.launch
 import org.jetbrains.anko.indeterminateProgressDialog
 import org.jetbrains.anko.toast
 import androidx.core.content.edit
+import com.example.mobile_auth.utils.API_SHARED_FILE
+import com.example.mobile_auth.utils.AUTHENTICATED_SHARED_KEY
+import com.example.mobile_auth.utils.isValid
 
 @InternalCoroutinesApi
 class RegistrationActivity : AppCompatActivity(), CoroutineScope by MainScope() {
