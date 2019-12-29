@@ -10,8 +10,12 @@ import com.example.mobile_auth.utils.ITEM_FOOTER
 import com.example.mobile_auth.utils.ITEM_HEADER
 import com.example.mobile_auth.utils.ITEM_TYPE_POST
 import com.example.mobile_auth.utils.ITEM_TYPE_REPOST
+import kotlinx.coroutines.CoroutineScope
 
-class PostAdapter(var list: MutableList<PostModel>) :
+class PostAdapter(
+    private val coroutineScope: CoroutineScope,
+    var list: MutableList<PostModel>
+) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var likeBtnClickListener: OnLikeBtnClickListener? = null
     var repostBtnClickListener: OnShareBtnClickListener? = null
@@ -30,6 +34,7 @@ class PostAdapter(var list: MutableList<PostModel>) :
             }
             ITEM_HEADER -> {
                 HeaderViewHolder(
+                    coroutineScope,
                     this,
                     LayoutInflater.from(parent.context).inflate(
                         R.layout.item_load_new,
@@ -40,6 +45,7 @@ class PostAdapter(var list: MutableList<PostModel>) :
             }
             else -> {
                 FooterViewHolder(
+                    coroutineScope,
                     this,
                     LayoutInflater.from(parent.context).inflate(
                         R.layout.item_load_more,

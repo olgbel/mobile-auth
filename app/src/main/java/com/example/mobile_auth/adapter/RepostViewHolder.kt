@@ -40,7 +40,7 @@ class RepostViewHolder(val adapter: PostAdapter, view: View) : RecyclerView.View
             main_info_repost.authorTv.text = post.source?.author
             main_info_repost.contentTv.text = post.source?.content
             if (post.source?.attachment != null) {
-                loadImage(main_info_repost.photoImg, post.attachment!!.url)
+                loadImage(main_info_repost.photoImg, post.source.attachment.url)
             }
 
             social_btns_footer.likesTv.text = post.likes.count().toString()

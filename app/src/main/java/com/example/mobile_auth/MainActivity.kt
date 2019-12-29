@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope by MainScope() {
                 Context.MODE_PRIVATE
             )
                 .getString(AUTHENTICATED_SHARED_KEY, "")
-            Repository.createRetrofitWithAuth(token!!)
+            Repository.createRetrofitWithAuth(requireNotNull(token))
 
             val feedActivityIntent = Intent(this@MainActivity, FeedActivity::class.java)
             startActivity(feedActivityIntent)
@@ -54,8 +54,8 @@ class MainActivity : AppCompatActivity(), CoroutineScope by MainScope() {
                         dialog?.dismiss()
                         if (response.isSuccessful) {
                             toast(R.string.success)
-                            setUserAuth(response.body()!!.token)
-                            Repository.createRetrofitWithAuth(response.body()!!.token)
+                            setUserAuth(requireNotNull(response.body()).token)
+                            Repository.createRetrofitWithAuth(requireNotNull(response.body()).token)
                             val feedActivityIntent =
                                 Intent(this@MainActivity, FeedActivity::class.java)
                             startActivity(feedActivityIntent)

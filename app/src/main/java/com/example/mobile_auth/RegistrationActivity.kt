@@ -50,7 +50,7 @@ class RegistrationActivity : AppCompatActivity(), CoroutineScope by MainScope() 
                     dialog?.dismiss()
                     if (response.isSuccessful) {
                         toast(R.string.success)
-                        setUserAuth(response.body()!!.token)
+                        setUserAuth(requireNotNull(response.body()).token)
                         finish()
                     } else {
                         toast(R.string.registration_failed)
