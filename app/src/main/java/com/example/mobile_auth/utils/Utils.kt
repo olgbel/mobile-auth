@@ -1,5 +1,6 @@
 package com.example.mobile_auth.utils
 
+import android.content.Context
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import java.util.regex.Pattern
@@ -20,5 +21,6 @@ fun loadImage(photoImg: ImageView, url: String) {
         .into(photoImg)
 }
 
-
-
+fun getToken(ctx: Context) =
+    ctx.getSharedPreferences(API_SHARED_FILE, Context.MODE_PRIVATE)
+        .getString(AUTHENTICATED_SHARED_KEY, null)
