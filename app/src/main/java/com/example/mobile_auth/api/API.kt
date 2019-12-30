@@ -3,21 +3,15 @@ package com.example.mobile_auth.api
 import com.example.mobile_auth.dto.AttachmentModel
 import com.example.mobile_auth.dto.PostModel
 import com.example.mobile_auth.dto.PostRequestDto
-import com.example.mobile_auth.dto.PostType
 import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.*
 
-// Данные для авторизации
 data class AuthRequestParams(val username: String, val password: String)
 
-// Токен для идентификации последущих запросов
 data class Token(val token: String)
 
-// Данные для регистрации
 data class RegistrationRequestParams(val username: String, val password: String)
-
-// Данные для создания поста (для новых постов id=0)
 
 data class CreatePostRequest(val id: Long = 0,
                              val content: String,
@@ -59,6 +53,5 @@ interface API {
 
     @Multipart
     @POST("api/v1/media")
-    suspend fun uploadImage(@Part file: MultipartBody.Part):
-            Response<AttachmentModel>
+    suspend fun uploadImage(@Part file: MultipartBody.Part): Response<AttachmentModel>
 }

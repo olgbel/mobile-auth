@@ -18,6 +18,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.create
 import java.io.ByteArrayOutputStream
 
 object Repository {
@@ -30,7 +31,6 @@ object Repository {
 
     fun createRetrofitWithAuth(authToken: String) {
         val httpLoggerInterceptor = HttpLoggingInterceptor()
-        // Указываем, что хотим логировать тело запроса.
         httpLoggerInterceptor.level = HttpLoggingInterceptor.Level.BODY
         val client = OkHttpClient.Builder()
             .addInterceptor(InjectAuthTokenInterceptor(authToken))
@@ -41,12 +41,10 @@ object Repository {
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-        //создаем API на основе нового retrofit-клиента
-        API = retrofit.create(com.example.mobile_auth.api.API::class.java)
+        API = retrofit.create()
     }
 
 
-    // Ленивое создание API
     private var API: API =
         retrofit.create(com.example.mobile_auth.api.API::class.java)
 
@@ -67,7 +65,6 @@ object Repository {
 
     suspend fun createPost(content: String, attachmentModel: AttachmentModel?) = API.createPost(
         CreatePostRequest(
-//            postType = PostType.POST,
             content = content,
             attachment = attachmentModel
         )
@@ -91,16 +88,11 @@ object Repository {
     )
 
     suspend fun upload(bitmap: Bitmap): Response<AttachmentModel> {
-        // Создаем поток байтов
         val bos = ByteArrayOutputStream()
-        // Помещаем Bitmap в качестве JPEG в этот поток
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos)
         val reqFIle =
-            // Создаем тип медиа и передаем массив байтов с потока
             RequestBody.create(MediaType.parse("image/jpeg"), bos.toByteArray())
         val body =
-        // Создаем multipart объект, где указываем поле, в котором
-            // содержатся посылаемые данные, имя файла и медиафайл
             MultipartBody.Part.createFormData("file", "image.jpg", reqFIle)
         return API.uploadImage(body)
     }

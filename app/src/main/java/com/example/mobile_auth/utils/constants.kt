@@ -8,8 +8,14 @@ const val API_SHARED_FILE = "API_shared_file"
 const val BASE_URL = "https://crud-backend2.herokuapp.com"
                     //"http://10.0.2.2:9999"
 
+const val UPLOAD_CHANEL_ID = "upload_chanel_id"
+const val COMEBACK_FIRST_TIME_NOTIFY_ID = 0
+const val RETURN_NOTIFY_ID = 1
+const val COMEBACK_CHANNEL_ID = "comeback_chanel_id"
 
 const val ITEM_TYPE_POST = 1
 const val ITEM_TYPE_REPOST = 2
 const val ITEM_FOOTER = 3
 const val ITEM_HEADER = 4
+
+const val RANDOM_NOTIFICATION = 100000

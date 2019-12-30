@@ -21,6 +21,7 @@ import kotlinx.android.synthetic.main.activity_create_post.*
 import kotlinx.android.synthetic.main.activity_feed.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import org.jetbrains.anko.toast
 import java.util.concurrent.TimeUnit
@@ -143,5 +144,7 @@ class FeedActivity : AppCompatActivity(), CoroutineScope by MainScope(),
         } else {
             setLastVisitTime(this, System.currentTimeMillis())
         }
+
+        cancel()
     }
 }

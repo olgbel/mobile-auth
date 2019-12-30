@@ -1,8 +1,6 @@
 package com.example.mobile_auth
 
-import android.app.Activity.RESULT_OK
 import android.app.ProgressDialog
-import android.app.ProgressDialog.show
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
@@ -84,15 +82,11 @@ class CreatePostActivity : AppCompatActivity(), CoroutineScope by MainScope() {
 
     private fun imageUploaded() {
         transparetAllIcons()
-        // Показываем красную галочку над фото
         attachPhotoDoneImg.visibility = View.VISIBLE
     }
 
-    // Устанавливаем все иконки в полупрозрачный серый цвет
     private fun transparetAllIcons() {
         attachPhotoImg.setImageResource(R.drawable.ic_add_a_photo_inactive)
-//        attachAudioImg.setImageResource(R.drawable.ic_add_an_audio_inactive)
-//        attachVideoImg.setImageResource(R.drawable.ic_add_a_video_inactive)
     }
 
     private fun dispatchTakePictureIntent() {
