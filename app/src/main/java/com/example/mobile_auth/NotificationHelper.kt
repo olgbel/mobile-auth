@@ -48,6 +48,12 @@ object NotificationHelper {
         showNotification(context, builder)
     }
 
+    fun simpleNotification(context: Context, title: String, text: String) {
+        createNotificationChannelIfNotCreated(context)
+        val builder = createBuilder(context, title, text, NotificationManager.IMPORTANCE_HIGH)
+        showNotification(context, builder)
+    }
+
     fun returnToAppNotification(context: Context) {
         val intent = Intent(context, FeedActivity::class.java)
         val pendingIntent = PendingIntent.getActivity(

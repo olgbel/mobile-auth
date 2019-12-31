@@ -9,6 +9,7 @@ import com.example.mobile_auth.api.interceptor.InjectAuthTokenInterceptor
 import com.example.mobile_auth.dto.AttachmentModel
 import com.example.mobile_auth.dto.PostRequestDto
 import com.example.mobile_auth.dto.PostType
+import com.example.mobile_auth.dto.PushRequestParamsDto
 import com.example.mobile_auth.utils.BASE_URL
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -96,4 +97,6 @@ object Repository {
             MultipartBody.Part.createFormData("file", "image.jpg", reqFIle)
         return API.uploadImage(body)
     }
+
+    suspend fun registerPushToken(token: String) = API.registerPushToken(PushRequestParamsDto(token))
 }

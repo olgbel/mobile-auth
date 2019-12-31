@@ -17,12 +17,16 @@ import com.example.mobile_auth.adapter.PostAdapter
 import com.example.mobile_auth.dto.PostModel
 import com.example.mobile_auth.utils.SHOW_NOTIFICATION_AFTER_UNVISITED_MS
 import com.example.mobile_auth.utils.UserNotHereWorker
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.GoogleApiAvailability
+import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.android.synthetic.main.activity_create_post.*
 import kotlinx.android.synthetic.main.activity_feed.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
+import org.jetbrains.anko.longToast
 import org.jetbrains.anko.toast
 import java.util.concurrent.TimeUnit
 
@@ -40,6 +44,31 @@ class FeedActivity : AppCompatActivity(), CoroutineScope by MainScope(),
         fab.setOnClickListener {
             startActivity(Intent(this, CreatePostActivity::class.java))
         }
+
+        requestToken()
+    }
+
+    private fun requestToken() {
+        with(GoogleApiAvailability.getInstance()) {
+            val code = isGooglePlayServicesAvailable(this@FeedActivity)
+            if (code == ConnectionResult.SUCCESS) {
+                return@with
+            }
+            if (isUserResolvableError(code)) {
+                getErrorDialog(this@FeedActivity, code, 9000).show()
+                return
+            }
+            longToast(getString(R.string.google_play_unavailable))
+            return
+        }
+
+        FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener {
+            launch {
+                println(it.token)
+                val response = Repository.registerPushToken(it.token)
+            }
+        }
+
     }
 
     override fun onStart() {

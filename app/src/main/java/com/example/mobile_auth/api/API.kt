@@ -3,6 +3,7 @@ package com.example.mobile_auth.api
 import com.example.mobile_auth.dto.AttachmentModel
 import com.example.mobile_auth.dto.PostModel
 import com.example.mobile_auth.dto.PostRequestDto
+import com.example.mobile_auth.dto.PushRequestParamsDto
 import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.*
@@ -54,4 +55,7 @@ interface API {
     @Multipart
     @POST("api/v1/media")
     suspend fun uploadImage(@Part file: MultipartBody.Part): Response<AttachmentModel>
+
+    @POST("api/v1/token")
+    suspend fun registerPushToken(@Body params: PushRequestParamsDto): Response<Void>
 }
