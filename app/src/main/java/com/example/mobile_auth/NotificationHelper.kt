@@ -50,7 +50,11 @@ object NotificationHelper {
 
     fun simpleNotification(context: Context, title: String, text: String) {
         createNotificationChannelIfNotCreated(context)
-        val builder = createBuilder(context, title, text, NotificationManager.IMPORTANCE_HIGH)
+        val intent = Intent(context, FeedActivity::class.java)
+        val pendingIntent = PendingIntent.getActivity(context, SIMPLE_NOTIFY_ID, intent, 0)
+
+        val builder = createBuilder(context, title, text, NotificationManager.IMPORTANCE_HIGH).setContentIntent(pendingIntent)
+
         showNotification(context, builder)
     }
 
