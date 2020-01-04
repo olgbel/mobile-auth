@@ -3,7 +3,7 @@ package com.example.mobile_auth.utils
 import androidx.recyclerview.widget.DiffUtil
 import com.example.mobile_auth.dto.PostModel
 
-class postsDiffUtilCallback(oldList: List<PostModel>, newList: List<PostModel>) : DiffUtil.Callback() {
+class PostsDiffUtilCallback(oldList: List<PostModel>, newList: List<PostModel>) : DiffUtil.Callback() {
 
     val oldList: List<PostModel> = emptyList()
     val newList: List<PostModel> = emptyList()
